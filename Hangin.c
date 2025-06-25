@@ -56,43 +56,39 @@ void cargarArchivo(Map* mapaPalabras, Map* mapaCategorias) {
     scanf("%s", nombreArchivo);
 
     FILE* archivo = fopen(nombreArchivo, "r");
-    if (archivo == NULL) {
-        printf("Error: No se pudo abrir el archivo.\n");
+    if (!archivo) {
+        printf("❌ No se pudo abrir el archivo.\n");
         return;
     }
 
-    char linea[256];
-    int contador = 0;
-
+    char linea[200];
     while (fgets(linea, sizeof(linea), archivo)) {
-        contador++;
-        linea[strcspn(linea, "\n")] = '\0';
+        linea[strcspn(linea, "\n")] = 0;
+        char* token = strtok(linea, ",");
+        if (!token) continue;
 
-        char* palabra = strtok(linea, ",");
+        char* palabra = token;
         char* categoria = strtok(NULL, ",");
         char* dificultad = strtok(NULL, ",");
 
-        if (!palabra || !categoria || !dificultad) {
-            printf("Linea %d mal formateada. Se omitira.\n", contador);
-            continue;
-        }
+        if (!palabra || !categoria || !dificultad) continue;
 
-        char clave[128];
+        Palabra* nueva = crearPalabra(palabra, categoria, dificultad);
+
+        char clave[100];
         snprintf(clave, sizeof(clave), "%s-%s", categoria, dificultad);
 
         List* lista = map_get(mapaPalabras, clave);
-        if (lista == NULL) {
+        if (!lista) {
             lista = list_create();
             map_insert(mapaPalabras, strdup(clave), lista);
         }
-
-        Palabra* nueva = crearPalabra(palabra, categoria, dificultad);
         list_pushBack(lista, nueva);
         agregarDificultad(mapaCategorias, categoria, dificultad);
     }
 
     fclose(archivo);
-    printf("Archivo cargado correctamente.\n");
+    printf("✅ Archivo cargado correctamente.\n");
 }
 
 
