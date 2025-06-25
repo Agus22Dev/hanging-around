@@ -54,7 +54,7 @@ void agregarDificultad(Map* mapaCategorias, char* categoria, char* dificultad) {
 
 void cargarArchivo(Map* mapaPalabras, Map* mapaCategorias) {
     char nombre[50];
-    printf("Ingrese el nombre del archivo ej: animales): ");
+    printf("Ingrese el nombre del archivo (ej: animales): ");
     scanf("%s", nombre);
 
     char nombreArchivo[100];
