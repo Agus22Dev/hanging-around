@@ -53,11 +53,15 @@ void agregarDificultad(Map* mapaCategorias, char* categoria, char* dificultad) {
 // ==== FUNCIONES PRINCIPALES ====
 
 void cargarArchivo(Map* mapaPalabras, Map* mapaCategorias) {
+    char nombre[50];
+    printf("Ingrese el nombre del archivo ej: animales): ");
+    scanf("%s", nombre);
+
     char nombreArchivo[100];
-    printf("Ingrese el nombre del archivo CSV (ej: data/animales.csv): ");
-    scanf("%s", nombreArchivo);
+    snprintf(nombreArchivo, sizeof(nombreArchivo), "data/%s.csv", nombre);
 
     FILE* archivo = fopen(nombreArchivo, "r");
+
     if (!archivo) {
         printf("❌ No se pudo abrir el archivo.\n");
         return;
