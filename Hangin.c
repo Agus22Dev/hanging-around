@@ -52,7 +52,7 @@ void agregarDificultad(Map* mapaCategorias, char* categoria, char* dificultad) {
 
 void cargarArchivo(Map* mapaPalabras, Map* mapaCategorias) {
     char nombreArchivo[100];
-    printf("Ingrese el nombre del archivo CSV: ");
+    printf("Ingrese el nombre del archivo CSV (ej: data/animales.csv): ");
     scanf("%s", nombreArchivo);
 
     FILE* archivo = fopen(nombreArchivo, "r");
@@ -107,6 +107,8 @@ int main() {
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
     int opcion;
+    Map* mapaPalabras = map_create(is_equal_string);
+    Map* mapaCategorias = map_create(is_equal_string);
     do {
         mostrarMenu();
         scanf("%d", &opcion);
@@ -114,7 +116,7 @@ int main() {
 
         switch (opcion) {
             case 1:
-                printf("AQUI VA FUNCION");
+                cargarArchivo(mapaPalabras, mapaCategorias);
                 break;
             case 2:
                 printf("AQUI VA FUNCION");
