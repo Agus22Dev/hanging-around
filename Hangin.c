@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
+#include <ctype.h>
 #include <string.h>
 #include "tdas/map.h"
 #include "tdas/list.h"
