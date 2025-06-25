@@ -21,13 +21,13 @@ Hanging Around permite a los jugadores:
 2. Compila el programa con:
 
 ```bash
-gcc main.c tdas/list.c tdas/map.c -Itdas -lm -o hanging_around
+gcc Hanging.c tdas/list.c tdas/map.c -Itdas -lm -o hanging_around.exe
 ```
 
 3. Ejecuta el juego:
 
 ```bash
-./hanging_around
+./hanging_around.exe
 ```
 
 📝 Asegúrate de tener los archivos `.csv` en una carpeta llamada `data/`.
