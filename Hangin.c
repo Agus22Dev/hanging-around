@@ -128,10 +128,11 @@ int calcularPuntaje(const char* dificultad, int errores) {
     else
         puntajeBase = 200; // por defecto si la dificultad es inválida
 
-    float descuento = errores * 0.10f;
-    if (descuento > 1.0f) descuento = 1.0f; // evita que el puntaje sea negativo
+    // Por cada error, se descuenta un 10% del puntaje base
+    float descuento = errores * 0.10f * puntajeBase;
+    int puntajeFinal = puntajeBase - (int)descuento;
+    if (puntajeFinal < 0) puntajeFinal = 0; // nunca negativo
 
-    int puntajeFinal = (int)(puntajeBase * (1.0f - descuento));
     return puntajeFinal;
 }
 
