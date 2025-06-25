@@ -36,6 +36,9 @@ gcc Hanging.c tdas/list.c tdas/map.c -Itdas -lm -o hanging_around.exe
 
 ## 📁 Estructura esperada del CSV
 
+> ⚠️ **Importante:** Las palabras en el archivo CSV **no deben contener espacios ni tildes** para evitar errores de lectura y evaluación. Usa solo caracteres simples y sin acentos.
+
+
 Cada archivo `.csv` debe tener el siguiente formato (sin encabezados):
 
 ```
@@ -87,8 +90,8 @@ python,programacion,media
 Desarrollado con cariño por:
 
 - 👨‍💻 Agustín Sandoval  
-- 👨‍💻 Miguel Santibañez
-- 👨‍💻 Alejandro Rivera 
+- 👨‍💻 Miguel  Santibañez
+- 👨‍💻 Alejandro Rivera  
 
 🎓 Proyecto académico de la asignatura *Estructura de Datos*.
 
