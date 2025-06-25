@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "map.h"
-#include "list.h"
+#include "tdas/map.h"
+#include "tdas/list.h"
 #include <windows.h>
 
 // Estructuras base
@@ -17,6 +17,16 @@ typedef struct {
     int puntajeTotal;
 } Jugador;
 
+void mostrarMenu() {
+    printf("\n=== HANGING AROUND ===\n");
+    printf("1. Cargar archivo de palabras\n");
+    printf("2. Iniciar nueva partida\n");
+    printf("3. Ver ranking de jugadores\n");
+    printf("4. Salir\n");
+    printf("Seleccione una opcion: ");
+}
+
+//chato
 
 int main() {
     SetConsoleOutputCP(CP_UTF8);
