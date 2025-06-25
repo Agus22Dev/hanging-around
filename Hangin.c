@@ -290,6 +290,62 @@ void iniciarPartida(Map* mapaPalabras, Map* mapaCategorias, List* listaJugadores
 
 }
 
+int compararPuntajes(const void* a, const void* b) {
+    Jugador* j1 = *(Jugador**)a;
+    Jugador* j2 = *(Jugador**)b;
+    return j2->puntajeTotal - j1->puntajeTotal;
+}
+
+void mostrarRanking(List* listaJugadores) {
+    if (list_first(listaJugadores) == NULL) {
+        printf("\nNo hay jugadores registrados todavia.\n");
+        return;
+    }
+
+    int cantidad = 0;
+    Jugador* j = list_first(listaJugadores);
+    while (j != NULL) {
+        cantidad++;
+        j = list_next(listaJugadores);
+    }
+
+    Jugador** arreglo = malloc(sizeof(Jugador*) * cantidad);
+
+    j = list_first(listaJugadores);
+    for (int i = 0; i < cantidad; i++) {
+        arreglo[i] = j;
+        j = list_next(listaJugadores);
+    }
+
+    qsort(arreglo, cantidad, sizeof(Jugador*), compararPuntajes);
+
+    printf("\n Ranking de jugadores \n");
+    for (int i = 0; i < cantidad; i++) {
+        printf("%d. %s — %d puntos\n", i + 1, arreglo[i]->nombre, arreglo[i]->puntajeTotal);
+    }
+
+    free(arreglo);
+}
+
+void testRanking(List* listaJugadores) {
+    Jugador* a = malloc(sizeof(Jugador));
+    a->nombre = strdup("Agustin");
+    a->puntajeTotal = 250;
+
+    Jugador* b = malloc(sizeof(Jugador));
+    b->nombre = strdup("Miguel");
+    b->puntajeTotal = 320;
+
+    Jugador* c = malloc(sizeof(Jugador));
+    c->nombre = strdup("Alejandro");
+    c->puntajeTotal = 180;
+
+    list_pushBack(listaJugadores, a);
+    list_pushBack(listaJugadores, b);
+    list_pushBack(listaJugadores, c);
+
+    mostrarRanking(listaJugadores);
+}
 
 void mostrarMenu() {
     printf("\n=== HANGING AROUND ===\n");
@@ -322,7 +378,7 @@ int main() {
                 iniciarPartida(mapaPalabras, mapaCategorias, listaJugadores);
                 break;
             case 3:
-                printf("AQUI VA FUNCION");
+                mostrarRanking(listaJugadores);
                 break;
             case 4:
                 printf("Gracias por jugar Hanging Around. Hasta la proxima!\n");
