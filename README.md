@@ -1,70 +1,97 @@
+# 🎮 Hanging Around - Juego de Ahorcado
 
-================================================================================
-                                HANGING AROUND
-================================================================================
+¡Bienvenido a *Hanging Around*, un entretenido juego de ahorcado en terminal! Diseñado para desafiar tu memoria y vocabulario, esta aplicación te permite elegir entre distintas categorías y dificultades mientras compites por el mejor puntaje 🏆.
 
-Descripción general:
---------------------
-"Hanging Around" es un juego de ahorcado desarrollado en C, que permite a los 
-usuarios jugar partidas adivinando palabras de distintas categorías y niveles 
-de dificultad. El sistema soporta múltiples jugadores, ranking de puntajes y 
-carga dinámica de archivos de palabras.
+---
 
-Estructura del proyecto:
-------------------------
-- Hangin.c           --> Archivo principal con la lógica del juego.
-- tdas/              --> Carpeta con implementaciones de estructuras de datos:
-    - map.h/.c       --> Mapa (diccionario clave-valor)
-    - list.h/.c      --> Lista enlazada
-    - stack.h        --> Pila (basada en lista)
-    - queue.h        --> Cola (basada en lista)
-    - set.h          --> Conjunto (basado en mapa)
-    - heap.h/.c      --> Heap (cola de prioridad)
-    - multimap.h     --> Multimapa
-    - extra.h/.c     --> Funciones auxiliares (leer CSV, utilidades)
-- data/              --> Archivos CSV con palabras por categoría:
-    - animales.csv, comida.csv, deportes.csv, etc.
+## 📌 Descripción General
 
-Cómo jugar:
------------
-1. Al iniciar el programa, se muestra un menú principal con opciones para:
-    - Cargar archivo de palabras (por ejemplo: animales, comida, etc.)
-    - Iniciar una nueva partida
-    - Ver ranking de jugadores
-    - Salir
-    - Créditos
+Hanging Around permite a los jugadores:
+- 📂 **Cargar un archivo CSV** con palabras clasificadas por categoría y dificultad.
+- 🧠 **Jugar partidas** en las que se puede adivinar letra por letra o la palabra completa.
+- 🥇 **Registrar y mostrar rankings** de los jugadores con mejor desempeño.
+- 😵‍💫 Visualizar el clásico monito del ahorcado dibujado con caracteres ASCII.
+- 🧑‍💻 Ejecutarse directamente desde la consola con una interfaz simple y clara.
 
-2. Para jugar, primero debes cargar un archivo de palabras desde la opción 1.
-   El archivo debe estar en la carpeta "data" y tener formato CSV:
-   palabra,categoria,dificultad
+---
 
-3. Al iniciar una partida, el jugador ingresa su nombre y juega 3 rondas,
-   eligiendo categoría y dificultad en cada una. El sistema selecciona una
-   palabra aleatoria y el jugador debe adivinarla letra por letra o completa.
+## 🚀 ¿Cómo ejecutar el programa?
 
-4. El puntaje depende de la dificultad y los errores cometidos. Al finalizar,
-   el puntaje se suma al ranking general.
+1. Abre una terminal y ve a la carpeta raíz del proyecto.
+2. Compila el programa con:
 
-Estructuras principales:
-------------------------
-- Palabra: Guarda la palabra, su categoría y dificultad.
-- Jugador: Guarda el nombre y puntaje total.
-- Mapas y listas: Para organizar palabras por categoría/dificultad y jugadores.
+```bash
+gcc main.c tdas/list.c tdas/map.c -Itdas -lm -o hanging_around
+```
 
-Archivos de palabras:
----------------------
-- Los archivos CSV deben estar limpios, sin tildes ni espacios en las palabras.
-- Ejemplo de línea: perro,animales,facil
+3. Ejecuta el juego:
 
-Compilación y ejecución:
-------------------------
-- Compila con: gcc Hangin.c tdas/*.c -o hanging-around
-- Ejecuta con: ./hanging-around
+```bash
+./hanging_around
+```
 
-Autores:
---------
-- Agustin
-- Miguel
-- Alejandro
+📝 Asegúrate de tener los archivos `.csv` en una carpeta llamada `data/`.
 
-¡Gracias por jugar Hanging
+---
+
+## 📁 Estructura esperada del CSV
+
+Cada archivo `.csv` debe tener el siguiente formato (sin encabezados):
+
+```
+palabra,categoria,dificultad
+gato,animales,facil
+rinoceronte,animales,dificil
+python,programacion,media
+```
+
+---
+
+## 🎮 Menú principal
+
+```
+=== HANGING AROUND ===
+1. Cargar archivo de palabras
+2. Iniciar nueva partida
+3. Ver ranking de jugadores
+4. Salir
+5. Créditos
+```
+
+---
+
+## ⚙️ Funcionalidades destacadas
+
+| Funcionalidad                  | Estado       | Descripción |
+|-------------------------------|--------------|-------------|
+| Carga de CSV dinámico         | ✅ Funcional | Lee palabras categorizadas por dificultad. |
+| Juego de ahorcado             | ✅ Funcional | Muestra progreso, permite letras y palabras completas. |
+| Ranking de jugadores          | ✅ Funcional | Ordenado automáticamente por puntaje total. |
+| Créditos                      | ✅ Funcional | Muestra autores del proyecto. |
+| Validación de errores         | ✅ Parcial   | Se detectan errores básicos en CSV y entrada de usuario. |
+| Guardado de historial         | ❌ No incluye | El ranking se pierde al cerrar el programa. |
+
+---
+
+## ⚠️ Advertencias / Limitaciones
+
+- Actualmente **no se guarda el ranking** en un archivo persistente. Al cerrar el programa, los datos se pierden.
+- El sistema de entrada **no diferencia mayúsculas/minúsculas** en la palabra completa, pero **sí en letras individuales**.
+- **Los acentos y caracteres especiales** pueden no mostrarse correctamente en sistemas que no tengan UTF-8 activo.
+- Se recomienda que el nombre del CSV se ingrese **sin ruta ni extensión**, por ejemplo: `animales` buscará el archivo `data/animales.csv`.
+
+---
+
+## 🧑‍💻 Créditos
+
+Desarrollado con cariño por:
+
+- 👨‍💻 Agustín Sandoval  
+- 👨‍💻 Miguel  
+- 👨‍💻 Alejandro  
+
+🎓 Proyecto académico de la asignatura *Estructura de Datos*.
+
+---
+
+¡Gracias por jugar! 🕹️
