@@ -210,15 +210,7 @@ void iniciarPartida(Map* mapaPalabras, Map* mapaCategorias, List* listaJugadores
         }
     }
 
-    if (letrasAcertadas == largo) {
-        printf("\nFelicidades! Adivinaste la palabra: %s\n", palabraJuego->palabra);
-        jugador->puntajeTotal += 100;
-    } else {
-        printf("\nPerdiste. La palabra era: %s\n", palabraJuego->palabra);
-        jugador->puntajeTotal += 25;
-    }
-
-    printf("Puntaje actual: %d\n", jugador->puntajeTotal);
+ // añadir puntajes miguel
 }
 
 void mostrarMenu() {
