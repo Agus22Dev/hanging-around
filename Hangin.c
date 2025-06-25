@@ -386,6 +386,10 @@ int main() {
                 cargarArchivo(mapaPalabras, mapaCategorias);
                 break;
             case 2:
+                if (map_first(mapaPalabras) == NULL) {
+                    printf("⚠️ Debe cargar un archivo de palabras antes de iniciar una partida.\n");
+                    break;
+                }
                 iniciarPartida(mapaPalabras, mapaCategorias, listaJugadores);
                 break;
             case 3:
