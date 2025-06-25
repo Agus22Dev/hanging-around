@@ -252,10 +252,32 @@ void iniciarPartida(Map* mapaPalabras, Map* mapaCategorias, List* listaJugadores
 
             dibujarAhorcado(intentos, intentosMax);
 
-            char letra;
-            printf("Ingrese una letra: ");
-            scanf(" %c", &letra);
-            letra = tolower(letra);
+            char entrada[100];
+            printf("Ingrese una letra o la palabra completa: ");
+            scanf("%s", entrada);
+
+            // Si el usuario ingresa la palabra completa y es correcta
+            if (strlen(entrada) > 1) {
+                if (strcasecmp(entrada, palabraJuego->palabra) == 0) {
+                    for (int i = 0; i < largo; i++) {
+                        estado[i] = palabraJuego->palabra[i];
+                    }
+                    letrasAcertadas = largo;
+                    printf("¡Adivinaste la palabra completa!\n");
+                    break;
+                } else {
+                    printf("Palabra incorrecta.\n");
+                    intentos--;
+                    continue;
+                }
+            }
+
+            // Si el usuario ingresa solo una letra
+            char letra = tolower(entrada[0]);
+            if (!isalpha(letra) || strlen(entrada) != 1) {
+                printf("⚠️ Debe ingresar solo una letra o la palabra completa.\n");
+                continue;
+            }
 
             if (strchr(letrasUsadas, letra)) {
                 printf("⚠️ Ya usaste esa letra.\n");
