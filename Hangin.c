@@ -252,32 +252,10 @@ void iniciarPartida(Map* mapaPalabras, Map* mapaCategorias, List* listaJugadores
 
             dibujarAhorcado(intentos, intentosMax);
 
-            char entrada[100];
-            printf("Ingrese una letra o la palabra completa: ");
-            scanf("%s", entrada);
-
-            // Si el usuario ingresa la palabra completa y es correcta
-            if (strlen(entrada) > 1) {
-                if (strcasecmp(entrada, palabraJuego->palabra) == 0) {
-                    for (int i = 0; i < largo; i++) {
-                        estado[i] = palabraJuego->palabra[i];
-                    }
-                    letrasAcertadas = largo;
-                    printf("¡Adivinaste la palabra completa!\n");
-                    break;
-                } else {
-                    printf("Palabra incorrecta.\n");
-                    intentos--;
-                    continue;
-                }
-            }
-
-            // Si el usuario ingresa solo una letra
-            char letra = tolower(entrada[0]);
-            if (!isalpha(letra) || strlen(entrada) != 1) {
-                printf("⚠️ Debe ingresar solo una letra o la palabra completa.\n");
-                continue;
-            }
+            char letra;
+            printf("Ingrese una letra: ");
+            scanf(" %c", &letra);
+            letra = tolower(letra);
 
             if (strchr(letrasUsadas, letra)) {
                 printf("⚠️ Ya usaste esa letra.\n");
@@ -315,10 +293,6 @@ void iniciarPartida(Map* mapaPalabras, Map* mapaCategorias, List* listaJugadores
         puntajeSesion += puntaje;
         printf("Puntaje obtenido en esta palabra: %d\n", puntaje);
         printf("Puntaje acumulado en la sesión: %d\n", puntajeSesion);
-
-        printf("Presione ENTER para continuar...");
-        getchar();
-        getchar();
     }
 
     jugador->puntajeTotal += puntajeSesion;
@@ -390,10 +364,19 @@ void mostrarMenu() {
     printf("2. Iniciar nueva partida\n");
     printf("3. Ver ranking de jugadores\n");
     printf("4. Salir\n");
+    printf("5. Créditos\n");
     printf("Seleccione una opcion: ");
 }
 
-//chato
+void mostrarCreditos() {
+    printf("\n=== Créditos ===\n");
+    printf("Hanging Around - Juego de Ahorcado\n");
+    printf("Desarrollado por:\n");
+    printf("- Agustin\n");
+    printf("- Miguel\n");
+    printf("- Alejandro\n");
+    printf("Gracias por jugar!\n\n");
+}
 
 int main() {
     SetConsoleOutputCP(CP_UTF8);
@@ -423,6 +406,9 @@ int main() {
                 break;
             case 4:
                 printf("Gracias por jugar Hanging Around. Hasta la proxima!\n");
+                break;
+            case 5:
+                mostrarCreditos();
                 break;
             default:
                 printf("Opcion invalida. Intente nuevamente.\n");
