@@ -17,6 +17,37 @@ typedef struct {
     int puntajeTotal;
 } Jugador;
 
+// ==== FUNCIONES AUXILIARES ====
+
+int is_equal_string(void* key1, void* key2) {
+    return strcmp((char*)key1, (char*)key2) == 0;
+}
+
+
+Palabra* crearPalabra(char* palabra, char* categoria, char* dificultad) {
+    Palabra* p = malloc(sizeof(Palabra));
+    p->palabra = strdup(palabra);
+    p->categoria = strdup(categoria);
+    p->dificultad = strdup(dificultad);
+    return p;
+}
+
+void agregarDificultad(Map* mapaCategorias, char* categoria, char* dificultad) {
+    List* listaDificultades = map_get(mapaCategorias, categoria);
+    if (listaDificultades == NULL) {
+        listaDificultades = list_create();
+        map_insert(mapaCategorias, strdup(categoria), listaDificultades);
+    }
+
+    char* existente = list_first(listaDificultades);
+    while (existente != NULL) {
+        if (strcmp(existente, dificultad) == 0) return;
+        existente = list_next(listaDificultades);
+    }
+
+    list_pushBack(listaDificultades, strdup(dificultad));
+}
+
 void mostrarMenu() {
     printf("\n=== HANGING AROUND ===\n");
     printf("1. Cargar archivo de palabras\n");
