@@ -87,8 +87,8 @@ python,programacion,media
 Desarrollado con cariño por:
 
 - 👨‍💻 Agustín Sandoval  
-- 👨‍💻 Miguel  
-- 👨‍💻 Alejandro  
+- 👨‍💻 Miguel Santibañez
+- 👨‍💻 Alejandro Rivera 
 
 🎓 Proyecto académico de la asignatura *Estructura de Datos*.
 
