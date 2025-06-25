@@ -10,7 +10,7 @@ boxeo,deportes,facil
 atletismo,deportes,facil
 rugby,deportes,facil
 hockey,deportes,facil
-ping pong,deportes,facil
+pingpong,deportes,facil
 karate,deportes,facil
 surf,deportes,facil
 esgrima,deportes,media
@@ -35,11 +35,10 @@ bobsleigh,deportes,dificil
 biathlon,deportes,dificil
 pentatlon,deportes,dificil
 skeleton,deportes,dificil
-canoa slalom,deportes,dificil
-salto con garrocha,deportes,dificil
-lucha grecorromana,deportes,dificil
-polo acuatico,deportes,dificil
-rugby seven,deportes,dificil
-esqui alpino,deportes,dificil
-esqui de fondo,deportes,dificil
-parapente,deportes,dificil
+canoaslalom,deportes,dificil
+saltocongarrocha,deportes,dificil
+luchagrecorromana,deportes,dificil
+poloacuatico,deportes,dificil
+rugbyseven,deportes,dificil
+esquialpino,deportes,dificil
+esquidefondo,deportes,dificil

@@ -15,11 +15,11 @@ carne,comida,facil
 pescado,comida,facil
 huevo,comida,facil
 manzana,comida,facil
-plátano,comida,facil
+platano,comida,facil
 naranja,comida,facil
-sandía,comida,facil
+sandia,comida,facil
 paella,comida,media
-lasaña,comida,media
+lasana,comida,media
 ceviche,comida,media
 tamales,comida,media
 empanada,comida,media
@@ -32,13 +32,13 @@ shawarma,comida,media
 moussaka,comida,media
 goulash,comida,media
 pierogi,comida,media
-tabulé,comida,media
+tabule,comida,media
 ramen,comida,media
 bibimbap,comida,media
 couscous,comida,media
 sauerbraten,comida,media
 baklava,comida,media
-coq au vin,comida,dificil
+coqauvin,comida,dificil
 bouillabaisse,comida,dificil
 wellington,comida,dificil
 ossobuco,comida,dificil
@@ -52,9 +52,7 @@ jambalaya,comida,dificil
 haggis,comida,dificil
 kibbeh,comida,dificil
 khachapuri,comida,dificil
-tarte tatin,comida,dificil
+tartetatin,comida,dificil
 pavlova,comida,dificil
 strudel,comida,dificil
 tournedos,comida,dificil
-mole poblano,comida,dificil
-pozole,comida,dificil

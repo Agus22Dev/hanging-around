@@ -12,15 +12,15 @@ uruguay,paises,facil
 paraguay,paises,facil
 cuba,paises,facil
 panama,paises,facil
-costa rica,paises,facil
+costarica,paises,facil
 guatemala,paises,facil
 honduras,paises,facil
-el salvador,paises,facil
+elsalvador,paises,facil
 nicaragua,paises,facil
 jamaica,paises,facil
 haiti,paises,facil
 dominicana,paises,facil
-españa,paises,facil
+espana,paises,facil
 francia,paises,facil
 italia,paises,facil
 alemania,paises,facil
@@ -29,7 +29,7 @@ inglaterra,paises,facil
 irlanda,paises,facil
 suiza,paises,facil
 australia,paises,media
-nueva zelanda,paises,media
+nuevazelanda,paises,media
 sudafrica,paises,media
 egipto,paises,media
 marruecos,paises,media
@@ -55,7 +55,7 @@ letonia,paises,media
 estonia,paises,media
 islandia,paises,media
 belgica,paises,media
-paises bajos,paises,media
+paisesbajos,paises,media
 luxemburgo,paises,media
 austria,paises,media
 kazajistan,paises,dificil
@@ -73,18 +73,15 @@ myanmar,paises,dificil
 butan,paises,dificil
 nepal,paises,dificil
 bangladesh,paises,dificil
-sri lanka,paises,dificil
+srilanka,paises,dificil
 maldivas,paises,dificil
 brunei,paises,dificil
-timor oriental,paises,dificil
+timoreste,paises,dificil
 liechtenstein,paises,dificil
-san marino,paises,dificil
+sanmarino,paises,dificil
 andorra,paises,dificil
 moldavia,paises,dificil
 macedonia,paises,dificil
 montenegro,paises,dificil
 bosnia,paises,dificil
 eslovenia,paises,dificil
-malta,paises,dificil
-chipre,paises,dificil
-singapur,paises,dificil
