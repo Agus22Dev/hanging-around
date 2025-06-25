@@ -116,6 +116,26 @@ void dibujarAhorcado(int intentos, int intentosMax) {
     printf("=========\n");
 }
 
+int calcularPuntaje(const char* dificultad, int errores) {
+    int puntajeBase;
+
+    if (strcmp(dificultad, "facil") == 0 || strcmp(dificultad, "Fácil") == 0)
+        puntajeBase = 100;
+    else if (strcmp(dificultad, "media") == 0 || strcmp(dificultad, "Media") == 0)
+        puntajeBase = 200;
+    else if (strcmp(dificultad, "dificil") == 0 || strcmp(dificultad, "Difícil") == 0)
+        puntajeBase = 300;
+    else
+        puntajeBase = 200; // por defecto si la dificultad es inválida
+
+    float descuento = errores * 0.10f;
+    if (descuento > 1.0f) descuento = 1.0f; // evita que el puntaje sea negativo
+
+    int puntajeFinal = (int)(puntajeBase * (1.0f - descuento));
+    return puntajeFinal;
+}
+
+
 void iniciarPartida(Map* mapaPalabras, Map* mapaCategorias, List* listaJugadores) {
     char nombre[50];
     printf("Ingrese su nombre: ");
@@ -254,15 +274,19 @@ void iniciarPartida(Map* mapaPalabras, Map* mapaCategorias, List* listaJugadores
         }
     }
 
+    int erroresCometidos = intentosMax - intentos;
+    int puntaje = calcularPuntaje(dificultad, erroresCometidos);
+
     if (letrasAcertadas == largo) {
         printf("🎉 ¡Ganaste! La palabra era: %s\n", palabraJuego->palabra);
-        jugador->puntajeTotal += 100;
     } else {
         printf("💀 Perdiste. La palabra era: %s\n", palabraJuego->palabra);
-        jugador->puntajeTotal += 25;
     }
 
-    printf("Tu puntaje actual: %d\n", jugador->puntajeTotal);
+    jugador->puntajeTotal += puntaje;
+    printf("Puntaje obtenido en esta partida: %d\n", puntaje);
+    printf("Tu puntaje total: %d\n", jugador->puntajeTotal);
+
 }
 
 
