@@ -91,11 +91,60 @@ void cargarArchivo(Map* mapaPalabras, Map* mapaCategorias) {
     printf("✅ Archivo cargado correctamente.\n");
 }
 
-//void iniciarPartida(Map* mapaPalabras, Map* mapaCategorias, List* listaJugadores)
+void iniciarPartida(Map* mapaPalabras, Map* mapaCategorias, List* listaJugadores) {
+    char nombre[50];
+    printf("\nIngrese su nombre: ");
+    scanf("%s", nombre);
 
-/*
-algo asi tiene que tener para elegir la palabra aleatoria, falta inicializar el jugador y eso ;)
-// Esto para buscar en la lista de palabras
+    // Crear o recuperar jugador
+    Jugador* jugador = NULL;
+    Jugador* temp = list_first(listaJugadores);
+    while (temp != NULL) {
+        if (strcmp(temp->nombre, nombre) == 0) {
+            jugador = temp;
+            break;
+        }
+        temp = list_next(listaJugadores);
+    }
+
+    if (jugador == NULL) {
+        jugador = malloc(sizeof(Jugador));
+        jugador->nombre = strdup(nombre);
+        jugador->puntajeTotal = 0;
+        list_pushBack(listaJugadores, jugador);
+    }
+
+    // Mostrar categorías
+    printf("\nCategorias disponibles:\n");
+    void* it = map_first(mapaCategorias);
+    while (it != NULL) {
+        printf("- %s\n", map_key(mapaCategorias));
+        it = map_next(mapaCategorias);
+    }
+
+    char categoria[50];
+    printf("Seleccione una categoria: ");
+    scanf("%s", categoria);
+
+    List* listaDificultades = map_get(mapaCategorias, categoria);
+    if (listaDificultades == NULL) {
+        printf("Categoria no encontrada.\n");
+        return;
+    }
+
+    // Mostrar dificultades
+    printf("\nDificultades disponibles:\n");
+    char* d = list_first(listaDificultades);
+    while (d != NULL) {
+        printf("- %s\n", d);
+        d = list_next(listaDificultades);
+    }
+
+    char dificultad[50];
+    printf("Seleccione una dificultad: ");
+    scanf("%s", dificultad);
+
+    // Buscar lista de palabras
     char clave[100];
     snprintf(clave, sizeof(clave), "%s-%s", categoria, dificultad);
 
@@ -105,7 +154,7 @@ algo asi tiene que tener para elegir la palabra aleatoria, falta inicializar el 
         return;
     }
 
-    // aqui para elegir la palabra aleatoria
+    // Elegir palabra aleatoria
     int total = 0;
     Palabra* p = list_first(listaPalabras);
     while (p != NULL) {
@@ -118,7 +167,7 @@ algo asi tiene que tener para elegir la palabra aleatoria, falta inicializar el 
     for (int i = 0; i < index; i++) list_next(listaPalabras);
     Palabra* palabraJuego = list_current(listaPalabras);
 
-    // aqui para iniciar juego del ahorcado (falta ajustar segun dif y eso)
+    // Iniciar juego del ahorcado
     int intentos = 6;
     int largo = strlen(palabraJuego->palabra);
     int letrasAcertadas = 0;
@@ -126,8 +175,6 @@ algo asi tiene que tener para elegir la palabra aleatoria, falta inicializar el 
     char estado[50];
     for (int i = 0; i < largo; i++) estado[i] = '_';
     estado[largo] = '\0';
-
-    de aqui tienes que iniciar el juego 
 
     printf("\nComienza el juego. Palabra de %d letras.\n", largo);
     while (intentos > 0 && letrasAcertadas < largo) {
@@ -172,12 +219,7 @@ algo asi tiene que tener para elegir la palabra aleatoria, falta inicializar el 
     }
 
     printf("Puntaje actual: %d\n", jugador->puntajeTotal);
-
-    agregando lo del inicio estarias joya con algo basico, pero hay que agregar para el puntaje segun funcion, se hace depue lol
 }
-*/
-
-
 
 void mostrarMenu() {
     printf("\n=== HANGING AROUND ===\n");
@@ -196,6 +238,7 @@ int main() {
     int opcion;
     Map* mapaPalabras = map_create(is_equal_string);
     Map* mapaCategorias = map_create(is_equal_string);
+    List* listaJugadores = list_create();
     do {
         mostrarMenu();
         scanf("%d", &opcion);
@@ -206,7 +249,7 @@ int main() {
                 cargarArchivo(mapaPalabras, mapaCategorias);
                 break;
             case 2:
-                printf("AQUI VA FUNCION");
+                iniciarPartida(mapaPalabras, mapaCategorias, listaJugadores);
                 break;
             case 3:
                 printf("AQUI VA FUNCION");
