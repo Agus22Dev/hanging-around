@@ -378,6 +378,63 @@ void mostrarCreditos() {
     printf("Gracias por jugar!\n\n");
 }
 
+void liberarPalabras(Map* mapaPalabras) {
+    MapPair* par = map_first(mapaPalabras);
+    while (par) {
+        List* lista = par->value;
+        Palabra* p = list_first(lista);
+        while (p) {
+            free(p->palabra);
+            free(p->categoria);
+            free(p->dificultad);
+            free(p);
+            p = list_next(lista);
+        }
+        list_clean(lista); // Limpia la lista, pero no la destruye (no hay list_destroy pública)
+        free(lista);
+        free(par->key);
+        par = map_next(mapaPalabras);
+    }
+    map_clean(mapaPalabras); // Limpia el map, pero no lo destruye (no hay map_destroy pública)
+    free(mapaPalabras);
+}
+
+void liberarCategorias(Map* mapaCategorias) {
+    MapPair* par = map_first(mapaCategorias);
+    while (par) {
+        List* lista = par->value;
+        char* d = list_first(lista);
+        while (d) {
+            free(d);
+            d = list_next(lista);
+        }
+        list_clean(lista);
+        free(lista);
+        free(par->key);
+        par = map_next(mapaCategorias);
+    }
+    map_clean(mapaCategorias);
+    free(mapaCategorias);
+}
+
+void liberarJugadores(List* listaJugadores) {
+    Jugador* j = list_first(listaJugadores);
+    while (j) {
+        free(j->nombre);
+        free(j);
+        j = list_next(listaJugadores);
+    }
+    list_clean(listaJugadores);
+    free(listaJugadores);
+}
+
+void liberarRecursos(Map* mapaPalabras, Map* mapaCategorias, List* listaJugadores) {
+    liberarPalabras(mapaPalabras);
+    liberarCategorias(mapaCategorias);
+    liberarJugadores(listaJugadores);
+}
+
+
 int main() {
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
@@ -416,5 +473,6 @@ int main() {
 
     } while (opcion != 4);
 
+    liberarRecursos(mapaPalabras, mapaCategorias, listaJugadores);
     return 0;
 }
