@@ -48,6 +48,54 @@ void agregarDificultad(Map* mapaCategorias, char* categoria, char* dificultad) {
     list_pushBack(listaDificultades, strdup(dificultad));
 }
 
+// ==== FUNCIONES PRINCIPALES ====
+
+void cargarArchivo(Map* mapaPalabras, Map* mapaCategorias) {
+    char nombreArchivo[100];
+    printf("Ingrese el nombre del archivo CSV: ");
+    scanf("%s", nombreArchivo);
+
+    FILE* archivo = fopen(nombreArchivo, "r");
+    if (archivo == NULL) {
+        printf("Error: No se pudo abrir el archivo.\n");
+        return;
+    }
+
+    char linea[256];
+    int contador = 0;
+
+    while (fgets(linea, sizeof(linea), archivo)) {
+        contador++;
+        linea[strcspn(linea, "\n")] = '\0';
+
+        char* palabra = strtok(linea, ",");
+        char* categoria = strtok(NULL, ",");
+        char* dificultad = strtok(NULL, ",");
+
+        if (!palabra || !categoria || !dificultad) {
+            printf("Linea %d mal formateada. Se omitira.\n", contador);
+            continue;
+        }
+
+        char clave[128];
+        snprintf(clave, sizeof(clave), "%s-%s", categoria, dificultad);
+
+        List* lista = map_get(mapaPalabras, clave);
+        if (lista == NULL) {
+            lista = list_create();
+            map_insert(mapaPalabras, strdup(clave), lista);
+        }
+
+        Palabra* nueva = crearPalabra(palabra, categoria, dificultad);
+        list_pushBack(lista, nueva);
+        agregarDificultad(mapaCategorias, categoria, dificultad);
+    }
+
+    fclose(archivo);
+    printf("Archivo cargado correctamente.\n");
+}
+
+
 void mostrarMenu() {
     printf("\n=== HANGING AROUND ===\n");
     printf("1. Cargar archivo de palabras\n");
