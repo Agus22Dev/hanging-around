@@ -168,7 +168,15 @@ void iniciarPartida(Map* mapaPalabras, Map* mapaCategorias, List* listaJugadores
     Palabra* palabraJuego = list_current(listaPalabras);
 
     // Iniciar juego del ahorcado
+    // Intentos segun dificultad cambiados lul
     int intentos = 6;
+    if (strcmp(dificultad, "facil") == 0 || strcmp(dificultad, "Fácil") == 0)
+        intentos = 8;
+    else if (strcmp(dificultad, "media") == 0 || strcmp(dificultad, "Media") == 0)
+        intentos = 6;
+    else if (strcmp(dificultad, "dificil") == 0 || strcmp(dificultad, "difícil") == 0)
+        intentos = 4;
+
     int largo = strlen(palabraJuego->palabra);
     int letrasAcertadas = 0;
     char letrasUsadas[50] = "";
@@ -210,7 +218,22 @@ void iniciarPartida(Map* mapaPalabras, Map* mapaCategorias, List* listaJugadores
         }
     }
 
- // añadir puntajes miguel
+    //aqui calcula el puntaje .-.
+    if (letrasAcertadas == largo) {
+        int puntajeBase = 0;
+        if (strcmp(dificultad, "facil") == 0 || strcmp(dificultad, "Fácil") == 0) puntajeBase = 100;
+        else if (strcmp(dificultad, "media") == 0 || strcmp(dificultad, "Media") == 0) puntajeBase = 200;
+        else if (strcmp(dificultad, "dificil") == 0 || strcmp(dificultad, "difícil") == 0) puntajeBase = 300;
+
+        int errores = 6 - intentos;
+        float descuento = errores * 0.10f * puntajeBase;
+        int puntajeFinal = puntajeBase - (int)descuento;
+
+        printf("¡Felicidades! Ganaste. Puntaje obtenido: %d\n", puntajeFinal);
+        jugador->puntajeTotal += puntajeFinal;
+    } else {
+        printf("Perdiste. La palabra era: %s\n", palabraJuego->palabra);
+    }
 }
 
 void mostrarMenu() {
