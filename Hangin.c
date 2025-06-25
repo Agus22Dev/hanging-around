@@ -91,15 +91,37 @@ void cargarArchivo(Map* mapaPalabras, Map* mapaCategorias) {
     printf("✅ Archivo cargado correctamente.\n");
 }
 
+void dibujarAhorcado(int intentos, int intentosMax) {
+    int partes = 6;
+    int partesMostrar = (int)round((double)(intentosMax - intentos) / intentosMax * partes);
+
+    printf("  +---+\n");
+    printf("  |   |\n");
+
+    if (partesMostrar > 0) printf("  O   |\n");
+    else printf("      |\n");
+
+    if (partesMostrar == 0) printf("      |\n");
+    else if (partesMostrar == 1) printf("  |   |\n");
+    else if (partesMostrar == 2) printf(" /|   |\n");
+    else if (partesMostrar >= 3) printf(" /|\\  |\n");
+
+    if (partesMostrar <= 3) printf("      |\n");
+    else if (partesMostrar == 4) printf(" /    |\n");
+    else if (partesMostrar >= 5) printf(" / \\  |\n");
+
+    printf("      |\n");
+    printf("=========\n");
+}
+
 void iniciarPartida(Map* mapaPalabras, Map* mapaCategorias, List* listaJugadores) {
     char nombre[50];
-    printf("\nIngrese su nombre: ");
+    printf("Ingrese su nombre: ");
     scanf("%s", nombre);
 
-    // Crear o recuperar jugador
     Jugador* jugador = NULL;
     Jugador* temp = list_first(listaJugadores);
-    while (temp != NULL) {
+    while (temp) {
         if (strcmp(temp->nombre, nombre) == 0) {
             jugador = temp;
             break;
@@ -107,57 +129,68 @@ void iniciarPartida(Map* mapaPalabras, Map* mapaCategorias, List* listaJugadores
         temp = list_next(listaJugadores);
     }
 
-    if (jugador == NULL) {
+    if (!jugador) {
         jugador = malloc(sizeof(Jugador));
         jugador->nombre = strdup(nombre);
         jugador->puntajeTotal = 0;
         list_pushBack(listaJugadores, jugador);
     }
 
-    // Mostrar categorías
-    printf("\nCategorias disponibles:\n");
-    void* it = map_first(mapaCategorias);
-    while (it != NULL) {
-        printf("- %s\n", map_key(mapaCategorias));
-        it = map_next(mapaCategorias);
+    printf("\nCategorías disponibles:\n");
+    MapPair* par = map_first(mapaCategorias);
+    while (par) {
+        printf("- %s\n", (char*)par->key);
+        par = map_next(mapaCategorias);
     }
 
     char categoria[50];
-    printf("Seleccione una categoria: ");
+    printf("Seleccione una categoría: ");
     scanf("%s", categoria);
 
     List* listaDificultades = map_get(mapaCategorias, categoria);
-    if (listaDificultades == NULL) {
-        printf("Categoria no encontrada.\n");
+    if (!listaDificultades) {
+        printf("⚠️ Categoría no encontrada.\n");
         return;
     }
 
-    // Mostrar dificultades
     printf("\nDificultades disponibles:\n");
-    char* d = list_first(listaDificultades);
-    while (d != NULL) {
-        printf("- %s\n", d);
-        d = list_next(listaDificultades);
+    char* dif = list_first(listaDificultades);
+    while (dif) {
+        printf("- %s\n", dif);
+        dif = list_next(listaDificultades);
     }
 
     char dificultad[50];
     printf("Seleccione una dificultad: ");
     scanf("%s", dificultad);
 
-    // Buscar lista de palabras
+    int intentosMax;
+
+    if (strcmp(dificultad, "facil") == 0 || strcmp(dificultad, "Fácil") == 0)
+        intentosMax = 8;
+    else if (strcmp(dificultad, "media") == 0 || strcmp(dificultad, "Media") == 0)
+        intentosMax = 6;
+    else if (strcmp(dificultad, "dificil") == 0 || strcmp(dificultad, "Difícil") == 0)
+        intentosMax = 4;
+    else {
+        printf("⚠️ Dificultad no válida. Usando dificultad media.\n");
+        intentosMax = 6;
+    }
+
+    int intentos = intentosMax;
+
     char clave[100];
     snprintf(clave, sizeof(clave), "%s-%s", categoria, dificultad);
-
     List* listaPalabras = map_get(mapaPalabras, clave);
-    if (listaPalabras == NULL || list_first(listaPalabras) == NULL) {
-        printf("No hay palabras para esta combinacion.\n");
+
+    if (!listaPalabras || list_first(listaPalabras) == NULL) {
+        printf("⚠️ No hay palabras para esta categoría/dificultad.\n");
         return;
     }
 
-    // Elegir palabra aleatoria
     int total = 0;
     Palabra* p = list_first(listaPalabras);
-    while (p != NULL) {
+    while (p) {
         total++;
         p = list_next(listaPalabras);
     }
@@ -167,16 +200,6 @@ void iniciarPartida(Map* mapaPalabras, Map* mapaCategorias, List* listaJugadores
     for (int i = 0; i < index; i++) list_next(listaPalabras);
     Palabra* palabraJuego = list_current(listaPalabras);
 
-    // Iniciar juego del ahorcado
-    // Intentos segun dificultad cambiados lul
-    int intentos = 6;
-    if (strcmp(dificultad, "facil") == 0 || strcmp(dificultad, "Fácil") == 0)
-        intentos = 8;
-    else if (strcmp(dificultad, "media") == 0 || strcmp(dificultad, "Media") == 0)
-        intentos = 6;
-    else if (strcmp(dificultad, "dificil") == 0 || strcmp(dificultad, "difícil") == 0)
-        intentos = 4;
-
     int largo = strlen(palabraJuego->palabra);
     int letrasAcertadas = 0;
     char letrasUsadas[50] = "";
@@ -184,18 +207,29 @@ void iniciarPartida(Map* mapaPalabras, Map* mapaCategorias, List* listaJugadores
     for (int i = 0; i < largo; i++) estado[i] = '_';
     estado[largo] = '\0';
 
-    printf("\nComienza el juego. Palabra de %d letras.\n", largo);
     while (intentos > 0 && letrasAcertadas < largo) {
-        printf("Palabra: %s\n", estado);
-        printf("Intentos restantes: %d\n", intentos);
-        printf("Letras usadas: %s\n", letrasUsadas);
+        printf("\nPalabra: ");
+        for (int i = 0; i < largo; i++) {
+            printf("%c ", estado[i]);
+        }
+        printf("\nIntentos restantes: %d\n", intentos);
+        printf("Letras usadas: ");
+        for (int i = 0; i < strlen(letrasUsadas); i++) {
+            printf("%c", letrasUsadas[i]);
+            if (i < strlen(letrasUsadas) - 1) printf(" - ");
+        }
+        printf("\n");
+
+        
+        dibujarAhorcado(intentos, intentosMax);
 
         char letra;
         printf("Ingrese una letra: ");
         scanf(" %c", &letra);
+        letra = tolower(letra);
 
         if (strchr(letrasUsadas, letra)) {
-            printf("Ya usaste esa letra.\n");
+            printf("⚠️ Ya usaste esa letra.\n");
             continue;
         }
 
@@ -203,8 +237,8 @@ void iniciarPartida(Map* mapaPalabras, Map* mapaCategorias, List* listaJugadores
 
         int acierto = 0;
         for (int i = 0; i < largo; i++) {
-            if (palabraJuego->palabra[i] == letra && estado[i] == '_') {
-                estado[i] = letra;
+            if (tolower(palabraJuego->palabra[i]) == letra && estado[i] == '_') {
+                estado[i] = palabraJuego->palabra[i];
                 letrasAcertadas++;
                 acierto = 1;
             }
@@ -214,27 +248,21 @@ void iniciarPartida(Map* mapaPalabras, Map* mapaCategorias, List* listaJugadores
             intentos--;
             printf("Letra incorrecta.\n");
         } else {
-            printf("Acierto!\n");
+            printf("¡Acierto!\n");
         }
     }
 
-    //aqui calcula el puntaje .-.
     if (letrasAcertadas == largo) {
-        int puntajeBase = 0;
-        if (strcmp(dificultad, "facil") == 0 || strcmp(dificultad, "Fácil") == 0) puntajeBase = 100;
-        else if (strcmp(dificultad, "media") == 0 || strcmp(dificultad, "Media") == 0) puntajeBase = 200;
-        else if (strcmp(dificultad, "dificil") == 0 || strcmp(dificultad, "difícil") == 0) puntajeBase = 300;
-
-        int errores = 6 - intentos;
-        float descuento = errores * 0.10f * puntajeBase;
-        int puntajeFinal = puntajeBase - (int)descuento;
-
-        printf("¡Felicidades! Ganaste. Puntaje obtenido: %d\n", puntajeFinal);
-        jugador->puntajeTotal += puntajeFinal;
+        printf("🎉 ¡Ganaste! La palabra era: %s\n", palabraJuego->palabra);
+        jugador->puntajeTotal += 100;
     } else {
-        printf("Perdiste. La palabra era: %s\n", palabraJuego->palabra);
+        printf("💀 Perdiste. La palabra era: %s\n", palabraJuego->palabra);
+        jugador->puntajeTotal += 25;
     }
+
+    printf("Tu puntaje actual: %d\n", jugador->puntajeTotal);
 }
+
 
 void mostrarMenu() {
     printf("\n=== HANGING AROUND ===\n");
