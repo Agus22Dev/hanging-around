@@ -3,6 +3,7 @@
 #include <string.h>
 #include "map.h"
 #include "list.h"
+#include <windows.h>
 
 // Estructuras base
 typedef struct {
@@ -18,7 +19,8 @@ typedef struct {
 
 
 int main() {
-
+    SetConsoleOutputCP(CP_UTF8);
+    SetConsoleCP(CP_UTF8);
     int opcion;
     do {
         mostrarMenu();
