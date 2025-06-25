@@ -91,6 +91,93 @@ void cargarArchivo(Map* mapaPalabras, Map* mapaCategorias) {
     printf("✅ Archivo cargado correctamente.\n");
 }
 
+//void iniciarPartida(Map* mapaPalabras, Map* mapaCategorias, List* listaJugadores)
+
+/*
+algo asi tiene que tener para elegir la palabra aleatoria, falta inicializar el jugador y eso ;)
+// Esto para buscar en la lista de palabras
+    char clave[100];
+    snprintf(clave, sizeof(clave), "%s-%s", categoria, dificultad);
+
+    List* listaPalabras = map_get(mapaPalabras, clave);
+    if (listaPalabras == NULL || list_first(listaPalabras) == NULL) {
+        printf("No hay palabras para esta combinacion.\n");
+        return;
+    }
+
+    // aqui para elegir la palabra aleatoria
+    int total = 0;
+    Palabra* p = list_first(listaPalabras);
+    while (p != NULL) {
+        total++;
+        p = list_next(listaPalabras);
+    }
+
+    int index = rand() % total;
+    list_first(listaPalabras);
+    for (int i = 0; i < index; i++) list_next(listaPalabras);
+    Palabra* palabraJuego = list_current(listaPalabras);
+
+    // aqui para iniciar juego del ahorcado (falta ajustar segun dif y eso)
+    int intentos = 6;
+    int largo = strlen(palabraJuego->palabra);
+    int letrasAcertadas = 0;
+    char letrasUsadas[50] = "";
+    char estado[50];
+    for (int i = 0; i < largo; i++) estado[i] = '_';
+    estado[largo] = '\0';
+
+    de aqui tienes que iniciar el juego 
+
+    printf("\nComienza el juego. Palabra de %d letras.\n", largo);
+    while (intentos > 0 && letrasAcertadas < largo) {
+        printf("Palabra: %s\n", estado);
+        printf("Intentos restantes: %d\n", intentos);
+        printf("Letras usadas: %s\n", letrasUsadas);
+
+        char letra;
+        printf("Ingrese una letra: ");
+        scanf(" %c", &letra);
+
+        if (strchr(letrasUsadas, letra)) {
+            printf("Ya usaste esa letra.\n");
+            continue;
+        }
+
+        strncat(letrasUsadas, &letra, 1);
+
+        int acierto = 0;
+        for (int i = 0; i < largo; i++) {
+            if (palabraJuego->palabra[i] == letra && estado[i] == '_') {
+                estado[i] = letra;
+                letrasAcertadas++;
+                acierto = 1;
+            }
+        }
+
+        if (!acierto) {
+            intentos--;
+            printf("Letra incorrecta.\n");
+        } else {
+            printf("Acierto!\n");
+        }
+    }
+
+    if (letrasAcertadas == largo) {
+        printf("\nFelicidades! Adivinaste la palabra: %s\n", palabraJuego->palabra);
+        jugador->puntajeTotal += 100;
+    } else {
+        printf("\nPerdiste. La palabra era: %s\n", palabraJuego->palabra);
+        jugador->puntajeTotal += 25;
+    }
+
+    printf("Puntaje actual: %d\n", jugador->puntajeTotal);
+
+    agregando lo del inicio estarias joya con algo basico, pero hay que agregar para el puntaje segun funcion, se hace depue lol
+}
+*/
+
+
 
 void mostrarMenu() {
     printf("\n=== HANGING AROUND ===\n");
